@@ -282,7 +282,11 @@ public class InventarioController {
     private void cargarCSSDark(DialogPane pane){
         String[] rutas = { "/css/dialog-dark.css", "/css/dark-theme.css", "/com/tutienda/inventario/css/dialog-dark.css", "/com/tutienda/inventario/ui/dark-dialog.css" };
         for(String ruta : rutas){
-            try{ var url = getClass().getResource(ruta); if(url!=null){ pane.getStylesheets().add(url.toExternalForm()); return; } }catch(Exception e){}
+            try{ var url = getClass().getResource(ruta); if(url!=null){ pane.getStylesheets().add(url.toExternalForm()); return; } } catch (Exception e) {
+                System.err.println("Error en InventarioController: " + e.getMessage());
+                // O mejor, muestra alerta al usuario:
+                // AlertaUtil.mostrarError("Error: " + e.getMessage());
+            }
         }
     }
 
@@ -424,7 +428,11 @@ public class InventarioController {
         try{
             java.nio.file.Files.writeString(java.nio.file.Path.of(System.getProperty("java.io.tmpdir")+"/darkHist.css"), darkTableCSS);
             pane.getStylesheets().add(new java.io.File(System.getProperty("java.io.tmpdir")+"/darkHist.css").toURI().toString());
-        }catch(Exception e){}
+        } catch (Exception e) {
+        System.err.println("Error en InventarioController: " + e.getMessage());
+        // O mejor, muestra alerta al usuario:
+        // AlertaUtil.mostrarError("Error: " + e.getMessage());
+    }
 
         Label lblTitulo = new Label(p.getMarcaNombre() + "  ART: " + p.getReferencia() + "  " + p.getNombre());
         lblTitulo.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 4 0 6 0;");
@@ -621,7 +629,11 @@ public class InventarioController {
         try{
             java.nio.file.Files.writeString(java.nio.file.Path.of(System.getProperty("java.io.tmpdir")+"/darkBlock.css"), darkCSS);
             pane.getStylesheets().add(new java.io.File(System.getProperty("java.io.tmpdir")+"/darkBlock.css").toURI().toString());
-        }catch(Exception e){}
+        } catch (Exception e) {
+        System.err.println("Error en InventarioController: " + e.getMessage());
+        // O mejor, muestra alerta al usuario:
+        // AlertaUtil.mostrarError("Error: " + e.getMessage());
+    }
 
         DatePicker dpDesde = new DatePicker(LocalDate.now().minusDays(7));
         DatePicker dpHasta = new DatePicker(LocalDate.now());

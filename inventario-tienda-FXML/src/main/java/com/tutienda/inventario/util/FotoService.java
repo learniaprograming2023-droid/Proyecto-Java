@@ -12,11 +12,16 @@ public final class FotoService {
     private FotoService(){}
 
     private static final long MAX_SIZE = 15 * 1024 * 1024;
+    // FIX QODANA: Cache que SI se consulta
     private static final Map<String, Image> CACHE = new ConcurrentHashMap<>();
 
     private static Path getFotosDir(){
         Path dir = Paths.get(System.getProperty("user.home"), "tienda_inventario", "fotos");
-        try{ Files.createDirectories(dir); } catch(Exception e){}
+        try{
+            Files.createDirectories(dir);
+        } catch (Exception e) {
+            System.err.println("Error creando dir fotos: " + e.getMessage());
+        }
         return dir;
     }
 
@@ -32,21 +37,46 @@ public final class FotoService {
         String ts = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
         Path destino = getFotosDir().resolve("prod_"+productoId+"_"+ts+ext);
         Files.copy(archivoOrigen.toPath(), destino, StandardCopyOption.REPLACE_EXISTING);
-        CACHE.clear();
+
+        // FIX: invalidamos solo esa entrada, no todo el cache
+        CACHE.remove(destino.toAbsolutePath().toString());
         return destino.toAbsolutePath().toString();
     }
 
     public static Image loadImage(String ruta, double w, double h){
         if(ruta==null || ruta.isBlank()) return null;
+
+        String key = ruta + "_" + w + "_" + h;
+        // FIX QODANA: Ahora SI consultamos el CACHE
+        Image cached = CACHE.get(key);
+        if (cached != null) return cached;
+
         try{
             File f = new File(ruta);
             if(!f.exists()) return null;
-            return new Image(f.toURI().toString(), w, h, true, true, true);
-        }catch(Exception e){ return null; }
+            Image img = new Image(f.toURI().toString(), w, h, true, true, true);
+            if (!img.isError()) {
+                CACHE.put(key, img);
+            }
+            return img;
+        } catch(Exception e){
+            // FIX QODANA: Empty catch block -> ahora loguea
+            System.err.println("Error loadImage ["+ruta+"]: " + e.getMessage());
+            return null;
+        }
     }
 
     public static void borrarFotoSiExiste(String ruta) {
         if(ruta==null || ruta.isEmpty()) return;
-        try{ Files.deleteIfExists(Paths.get(ruta)); } catch(Exception e){}
+        try{
+            Files.deleteIfExists(Paths.get(ruta));
+            CACHE.entrySet().removeIf(entry -> entry.getKey().startsWith(ruta));
+        } catch (Exception e) {
+            System.err.println("Error borrando foto: " + e.getMessage());
+        }
+    }
+
+    public static void limpiarCache() {
+        CACHE.clear();
     }
 }
