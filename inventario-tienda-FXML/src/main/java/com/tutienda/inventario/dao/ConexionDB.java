@@ -1,63 +1,67 @@
 package com.tutienda.inventario.dao;
 
 import com.tutienda.inventario.exception.DatabaseException;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
 public final class ConexionDB {
 
-    private static String URL;
-    private static String USER;
-    private static String PASS;
-    private static String ultimoError = null;
+    private static final HikariDataSource DS;
+    private static volatile String ultimoError = null;
 
     static {
+        HikariConfig config = new HikariConfig();
         try {
             Properties p = new Properties();
             try (InputStream in = ConexionDB.class.getClassLoader().getResourceAsStream("config.properties")) {
                 if (in != null) {
                     p.load(in);
-                    URL = String.format("jdbc:postgresql://%s:%s/%s",
-                            p.getProperty("db.host","localhost"),
-                            p.getProperty("db.port","5432"),
-                            p.getProperty("db.name","tienda_inventario"));
-                    USER = p.getProperty("db.user","postgres");
-                    PASS = p.getProperty("db.password","123456");
+                    String host = p.getProperty("db.host","localhost");
+                    String port = p.getProperty("db.port","5432");
+                    String name = p.getProperty("db.name","tienda_inventario");
+                    config.setJdbcUrl(String.format("jdbc:postgresql://%s:%s/%s", host, port, name));
+                    config.setUsername(p.getProperty("db.user","postgres"));
+                    config.setPassword(p.getProperty("db.password","123456"));
                 } else {
-                    // Fallback por si aún no creaste config.properties
-                    URL = "jdbc:postgresql://localhost:5432/tienda_inventario";
-                    USER = "postgres";
-                    PASS = "123456";
+                    config.setJdbcUrl("jdbc:postgresql://localhost:5432/tienda_inventario");
+                    config.setUsername("postgres");
+                    config.setPassword("123456");
                 }
             }
-            try (Connection c = DriverManager.getConnection(URL, USER, PASS)) {
-                System.out.println("✓ Conexión OK: " + URL);
-            }
+            // --- Configuración Senior ---
+            config.setMaximumPoolSize(10); // Soporta 5000 productos sin caerse
+            config.setMinimumIdle(2);
+            config.setConnectionTimeout(5000);
+            config.setIdleTimeout(30000);
+            config.setLeakDetectionThreshold(2000); // Qodana: Detecta leaks
+            config.setPoolName("InventarioPool");
+
+            DS = new HikariDataSource(config);
+            System.out.println("✓ HikariCP Pool OK: " + config.getJdbcUrl());
+
         } catch (Exception e) {
             ultimoError = e.getMessage();
-            System.err.println("✗ Error inicializando ConexionDB: " + ultimoError);
+            throw new ExceptionInInitializerError("✗ Error inicializando HikariPool: " + e.getMessage());
         }
     }
 
     private ConexionDB() {}
 
-    public static Connection getConnection() {
+    public static Connection getConnection() throws SQLException {
         try {
-            Connection conn = DriverManager.getConnection(URL, USER, PASS);
-            conn.setAutoCommit(true);
-            return conn;
+            return DS.getConnection();
         } catch (SQLException e) {
             ultimoError = e.getMessage();
-            throw new DatabaseException(
-                    "No se pudo conectar a PostgreSQL. Verifica que el servicio esté iniciado en Windows.", e);
+            throw new DatabaseException("No se pudo obtener conexión del Pool. Verifica PostgreSQL.", e);
         }
     }
 
     public static boolean isHealthy() {
-        try (Connection c = getConnection()) {
+        try (Connection c = DS.getConnection()) {
             return c.isValid(2);
         } catch (Exception e) {
             ultimoError = e.getMessage();
@@ -65,12 +69,14 @@ public final class ConexionDB {
         }
     }
 
+    public static void shutdown() {
+        if (DS != null && !DS.isClosed()) {
+            DS.close();
+        }
+    }
+
     public static String getUltimoError() { return ultimoError; }
 }
-
-
-
-
 
 
 
