@@ -1,0 +1,4 @@
+.table-row-cell:selected { -fx-background-color: #cce5ff; }
+.table-cell { -fx-alignment: CENTER; }
+.table-cell.stock-con { -fx-background-color: #d4edda; -fx-font-weight: bold; }
+.table-cell.stock-cero { -fx-text-fill: #aaa; }

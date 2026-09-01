@@ -1,0 +1,103 @@
+.dialog-root {
+    -fx-background-color: #121212;
+    -fx-background-radius: 12;
+}
+.header {
+    -fx-background-color: #1e1e1e;
+    -fx-background-radius: 12 12 0 0;
+    -fx-padding: 16;
+}
+.title {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+.card-top {
+    -fx-background-color: #252525;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #333;
+    -fx-border-width: 0 0 0 4;
+    -fx-border-color: transparent transparent transparent #10b981;
+    -fx-padding: 12;
+}
+.card-icon {
+    -fx-background-color: #234232;
+    -fx-background-radius: 30;
+    -fx-padding: 10;
+}
+.label-info {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+.label-sub {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 11px;
+}
+.label-seccion {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 11px;
+}
+.combo-dark {
+    -fx-background-color: #2a2a2a;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #3a3a3a;
+}
+.combo-dark:focused {
+    -fx-border-color: #10b981;
+    -fx-border-width: 1.5;
+}
+.combo-dark .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+}
+.combo-dark .prompt-text {
+    -fx-fill: #888;
+}
+.combo-dark .list-view {
+    -fx-background-color: #1e1e1e;
+    -fx-border-color: #3a3a3a;
+}
+.combo-dark .list-view .list-cell {
+    -fx-text-fill: #ddd;
+    -fx-background-color: #1e1e1e;
+    -fx-padding: 8 12 8 12;
+}
+.combo-dark .list-view .list-cell:filled:selected, .combo-dark .list-view .list-cell:filled:selected:hover {
+    -fx-background-color: #10b981;
+    -fx-text-fill: white;
+}
+.combo-dark .list-view .list-cell:filled:hover {
+    -fx-background-color: #2a2a2a;
+}
+.input-dark {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #666;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #3a3a3a;
+    -fx-padding: 10;
+}
+.btn-cancelar {
+    -fx-background-color: #1e1e1e;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #3a3a3a;
+    -fx-pref-height: 42;
+}
+.btn-confirmar {
+    -fx-background-color: #2d8a4e;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-pref-height: 42;
+}
+.btn-round {
+    -fx-background-color: #3a3a3a;
+    -fx-text-fill: white;
+    -fx-background-radius: 20;
+}

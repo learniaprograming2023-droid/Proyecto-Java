@@ -1,0 +1,73 @@
+/* PRO MAX - Pagination + Badge */
+
+/* Pagination base */
+.pagination {
+    -fx-background-color: transparent;
+}
+.pagination .pagination-control {
+    -fx-background-color: #242426;
+    -fx-background-radius: 10;
+    -fx-padding: 4 8;
+    -fx-border-color: #2a2a2a;
+    -fx-border-radius: 10;
+}
+.pagination .pagination-control .button, 
+.pagination .pagination-control .toggle-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9ca3af;
+    -fx-background-radius: 6;
+    -fx-border-color: transparent;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.pagination .pagination-control .button:hover,
+.pagination .pagination-control .toggle-button:hover {
+    -fx-background-color: #2d2d2d;
+    -fx-text-fill: white;
+}
+.pagination .pagination-control .toggle-button:selected {
+    -fx-background-color: #10B981;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #10B98166, 8, 0, 0, 0);
+}
+.pagination .pagination-control .left-arrow, .pagination .pagination-control .right-arrow {
+    -fx-background-color: #9ca3af;
+}
+
+/* Badge TOTAL */
+.badge-total {
+    -fx-background-color: #065F46;
+    -fx-background-radius: 20;
+    -fx-border-color: #10B98166;
+    -fx-border-radius: 20;
+    -fx-padding: 6 14;
+    -fx-spacing: 8;
+}
+.badge-total-dot {
+    -fx-background-color: #10B981;
+    -fx-background-radius: 100;
+    -fx-min-width: 8;
+    -fx-min-height: 8;
+    -fx-max-width: 8;
+    -fx-max-height: 8;
+}
+.badge-total-text {
+    -fx-text-fill: #6EE7B7;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+.badge-total-count {
+    -fx-text-fill: white;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-color: #10B981;
+    -fx-background-radius: 10;
+    -fx-padding: 1 7;
+}
+
+/* Search focus */
+.text-field:focused {
+    -fx-border-color: #10B981;
+    -fx-effect: dropshadow(gaussian, #10B98133, 8, 0, 0, 0);
+}
