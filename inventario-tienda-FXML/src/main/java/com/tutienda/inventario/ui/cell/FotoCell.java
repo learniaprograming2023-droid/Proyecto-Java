@@ -1,17 +1,21 @@
-package com.tutienda.inventario.ui;
+package com.tutienda.inventario.ui.cell;
 
 import com.tutienda.inventario.model.Producto;
-import com.tutienda.inventario.util.FotoService;
+import com.tutienda.inventario.service.FotoService;
+import com.tutienda.inventario.util.FotoActions;
+import com.tutienda.inventario.ui.InventarioController;
+import com.tutienda.inventario.ui.dialog.InventarioDialogs;
 import com.tutienda.inventario.util.Alerts;
+import com.tutienda.inventario.dao.ProductoDAO;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
 import java.io.File;
 
 public class FotoCell extends TableCell<Producto, Producto> {
     private final ImageView iv = new ImageView();
     private final Label lbl = new Label("📷 Agregar");
+    private final ProductoDAO productoDAO = new ProductoDAO();
 
     public FotoCell(TableView<Producto> tabla, InventarioController controller) {
         iv.setFitWidth(90); iv.setFitHeight(55); iv.setPreserveRatio(true);
@@ -23,25 +27,20 @@ public class FotoCell extends TableCell<Producto, Producto> {
         lbl.setOnMouseClicked(e -> elegirFoto(tabla));
         iv.setOnMouseClicked(e -> {
             Producto p = getItem();
-            if(p!=null && p.getFotoRuta()!=null) controller.mostrarFotoGrandePublic(new File(p.getFotoRuta()), p);
+            // CÓDIGO CORREGIDO:
+            if (p != null && p.getFotoRuta() != null) {
+                InventarioDialogs.mostrarFotoGrande(new File(p.getFotoRuta()), p);
+            }
         });
     }
-
     private void elegirFoto(TableView<Producto> tabla){
         Producto p = getItem(); if(p==null) return;
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Foto para "+p.getReferencia());
-        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imágenes","*.jpg","*.png","*.jpeg","*.webp"));
-        File sel = fc.showOpenDialog(tabla.getScene().getWindow());
-        if(sel!=null){
-            try{
-                String anterior = p.getFotoRuta();
-                String nueva = FotoService.guardarFoto(p.getId(), sel);
-                new com.tutienda.inventario.dao.ProductoDAO().actualizarFoto(p.getId(), nueva);
-                if(anterior!=null) FotoService.borrarFotoSiExiste(anterior);
-                p.setFotoRuta(nueva);
+        try {
+            if (FotoActions.seleccionarYGuardar(p, productoDAO, tabla.getScene().getWindow())) {
                 tabla.refresh();
-            }catch(Exception ex){ Alerts.error("Error foto", ex.getMessage(), ex); }
+            }
+        } catch (Exception ex) {
+            Alerts.error("Error foto", ex.getMessage(), ex);
         }
     }
 

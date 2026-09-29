@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="700.0" prefWidth="1100.0" spacing="15.0" styleClass="main-container" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tutienda.inventario.ui.HistorialGeneralController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <!-- HEADER -->
+        <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="header-box">
+            <children>
+                <VBox HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="title-label" text="Historial General" />
+                        <Label styleClass="subtitle-label" text="Registro detallado de movimientos y ventas de calzado" />
+                    </children>
+                </VBox>
+                <Label styleClass="badge-label" text="Inventario de Calzado" />
+            </children>
+        </HBox>
+
+        <!-- FILTROS Y BÚSQUEDA -->
+        <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="filter-card">
+            <children>
+                <VBox spacing="4.0">
+                    <children>
+                        <Label styleClass="filter-title" text="Rango de fechas" />
+                        <HBox alignment="CENTER_LEFT" spacing="8.0">
+                            <children>
+                                <DatePicker fx:id="dpFechaInicio" promptText="Desde" prefWidth="130.0" />
+                                <Label text="-" style="-fx-text-fill: #888;" />
+                                <DatePicker fx:id="dpFechaFin" promptText="Hasta" prefWidth="130.0" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <TextField fx:id="txtBuscar" promptText="🔍 Buscar por nombre, referencia..." prefWidth="250.0" HBox.hgrow="ALWAYS" />
+
+                <!-- BARRAS DE MÉTODOS DE PAGO (TOGGLE BUTTONS) -->
+                <VBox spacing="4.0">
+                    <children>
+                        <Label styleClass="filter-title" text="Método de pago" />
+                        <HBox spacing="6.0">
+                            <children>
+                                <ToggleButton fx:id="btnMetodoTodos" selected="true" text="Todos" />
+                                <ToggleButton fx:id="btnMetodoEfectivo" text="Efectivo" />
+                                <ToggleButton fx:id="btnMetodoNequi" text="Nequi" />
+                                <ToggleButton fx:id="btnMetodoDatafono" text="Datafono" />
+                                <ToggleButton fx:id="btnMetodoBancolombia" text="Bancolombia" />
+                                <ToggleButton fx:id="btnMetodoSistecredito" text="Sistecredito" />
+                                <ToggleButton fx:id="btnMetodoAddi" text="Addi" />
+                                <ToggleButton fx:id="btnMetodoSeparado" text="Separado" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
+            </padding>
+        </HBox>
+
+        <!-- BARRA ENCABEZADO DE COLUMNAS CON PADDING AJUSTADO -->
+        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: #0f172a; -fx-padding: 10 35 10 35; -fx-border-color: transparent transparent #334155 transparent; -fx-border-width: 1;">
+            <Label text="Hora" prefWidth="90" style="-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 11px;" />
+            <Label text="Producto / Referencia" prefWidth="260" style="-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 11px;" />
+            <Label text="Talla" prefWidth="50" alignment="CENTER" style="-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 11px;" />
+            <Label text="Cant." prefWidth="50" alignment="CENTER" style="-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 11px;" />
+            <Label text="Tipo" prefWidth="80" alignment="CENTER" style="-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 11px;" />
+            <Label text="Método de Pago" prefWidth="120" alignment="CENTER" style="-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 11px;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label text="Total" prefWidth="100" alignment="CENTER_RIGHT" style="-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 11px;" />
+            <Label text="Acción" prefWidth="60" alignment="CENTER" style="-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 11px;" />
+        </HBox>
+
+
+        <!-- TABLA DE MOVIMIENTOS -->
+        <!-- CONTENEDOR DE BLOQUES DIARIOS -->
+        <ScrollPane fitToWidth="true" styleClass="scroll-historial" VBox.vgrow="ALWAYS">
+            <content>
+                <VBox fx:id="contenedorBloques" spacing="15" style="-fx-background-color: transparent; -fx-padding: 10;">
+                    <!-- Las tarjetas por día se cargarán dinámicamente aquí -->
+                </VBox>
+            </content>
+        </ScrollPane>
+
+        <!-- FOOTER Y PAGINACIÓN -->
+        <HBox alignment="CENTER_RIGHT" spacing="15.0">
+            <children>
+                <Label fx:id="lblResumen" styleClass="info-label" text="Mostrando 0 registros" HBox.hgrow="ALWAYS" />
+                <Pagination fx:id="paginacion" maxPageIndicatorCount="5" pageCount="1" />
+            </children>
+        </HBox>
+    </children>
+</VBox>

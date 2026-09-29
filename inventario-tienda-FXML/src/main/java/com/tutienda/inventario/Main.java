@@ -1,6 +1,6 @@
 package com.tutienda.inventario;
 
-import com.tutienda.inventario.dao.ConexionDB;
+import com.tutienda.inventario.config.ConexionDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +14,7 @@ public class Main extends Application {
         ConexionDB.getConnection();
 
         // FIX QODANA 1: FXML con null-check Senior
-        var fxmlUrl = getClass().getResource("/com/tutienda/inventario/inventario.fxml");
+        var fxmlUrl = getClass().getResource("/com/tutienda/inventario/ui/inventario.fxml");
         Objects.requireNonNull(fxmlUrl, "No se encontró inventario.fxml en resources");
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
 

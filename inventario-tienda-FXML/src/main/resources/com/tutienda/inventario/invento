@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tutienda.inventario.ui.InventarioController">
+  <padding><Insets top="15" left="15" right="15" bottom="15"/></padding>
+
+  <Label style="-fx-font-size: 18; -fx-font-weight: bold;" text="INVENTARIO - MARCA / REFERENCIA | TALLAS | FOTO"/>
+
+  <HBox spacing="10">
+    <TextField fx:id="txtBuscar" HBox.hgrow="ALWAYS" promptText="Buscar producto con su fila correspondiente (tallas, cantidad total y foto)"/>
+    <Pagination fx:id="pagination" maxWidth="300"/>
+  </HBox>
+
+  <TableView fx:id="tabla" VBox.vgrow="ALWAYS" editable="true"/>
+
+  <Separator/>
+
+  <GridPane hgap="10" vgap="10">
+    <Label text="Agregar Marca:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+    <TextField fx:id="txtNuevaMarca" promptText="Ej: NIKE, ADIDAS, PUMA" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    <Button text="Crear Marca" onAction="#onAgregarMarca" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+
+    <Label text="Agregar Producto:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <ComboBox fx:id="cbMarcas" prefWidth="150" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <TextField fx:id="txtRef" promptText="Referencia Ej: ART: 001-808" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+    <TextField fx:id="txtNombre" promptText="Nombre Ej: FOR ONE BLANCO" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+    <Button text="+ Producto" onAction="#onAgregarProducto" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+
+    <!-- FILA 2: Botones de acción - CORREGIDO SIN CAST -->
+    <Button fx:id="btnAgregarFoto" text="📷 Agregar Foto del Modelo Seleccionado" onAction="#onAgregarFoto" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2"/>
+    <Button fx:id="btnCambio" text="🔄 Cambio Talla/Modelo" onAction="#onRealizarCambio" GridPane.columnIndex="2" GridPane.rowIndex="2" style="-fx-base: #fff3e0; -fx-font-weight: bold;"/>
+    <Button text="📜 Historial General" onAction="#onVerHistorialGeneral" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+    <Button text="📜 Ver Historial del Seleccionado" onAction="#onVerHistorialSeleccionado" GridPane.columnIndex="4" GridPane.rowIndex="2"/>
+
+    <Label fx:id="lblInfo" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="5" style="-fx-font-weight: bold;"/>
+  </GridPane>
+</VBox>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefWidth="520" spacing="16" style="-fx-background-color: #0b132b; -fx-padding: 22; -fx-background-radius: 12; -fx-border-color: #1e293b; -fx-border-width: 1; -fx-border-radius: 12;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tutienda.inventario.ui.EditarMovimientoModalController">
+
+    <!-- 1. ENCABEZADO -->
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <HBox alignment="CENTER" prefHeight="38" prefWidth="38" style="-fx-background-color: #1c2541; -fx-background-radius: 8;">
+            <Label style="-fx-font-size: 18px;" text="👟" />
+        </HBox>
+        <VBox spacing="2">
+            <Label style="-fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;" text="Editar Movimiento de Inventario" />
+            <Label style="-fx-text-fill: #64748b; -fx-font-size: 12px;" text="Gestiona la cantidad, talla, método de pago y producto." />
+        </VBox>
+        <Region HBox.hgrow="ALWAYS" />
+        <Button onAction="#cerrarVentana" style="-fx-background-color: transparent; -fx-text-fill: #64748b; -fx-font-size: 16px; -fx-cursor: hand;" text="✕" />
+    </HBox>
+
+    <!-- 2. TARJETA DE PRODUCTO -->
+    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: #1c2541; -fx-padding: 14; -fx-background-radius: 10; -fx-border-color: #2a3759; -fx-border-radius: 10;">
+        <HBox alignment="CENTER" prefHeight="55" prefWidth="55" style="-fx-background-color: #0f172a; -fx-background-radius: 8;">
+            <Label style="-fx-font-size: 28px;" text="👟" />
+        </HBox>
+
+        <VBox spacing="4" HBox.hgrow="ALWAYS">
+            <Label style="-fx-background-color: #0284c7; -fx-text-fill: white; -fx-padding: 2 8; -fx-background-radius: 4; -fx-font-size: 10px; -fx-font-weight: bold;" text="Producto Actual" />
+            <Label fx:id="lblProductoNombre" style="-fx-text-fill: #ffffff; -fx-font-size: 15px; -fx-font-weight: bold;" text="Producto" />
+            <Label fx:id="lblProductoRef" style="-fx-text-fill: #94a3b8; -fx-font-size: 11px;" text="Referencia: -" />
+        </VBox>
+
+        <VBox alignment="CENTER_RIGHT" spacing="4">
+            <Button fx:id="btnCambiarProducto" style="-fx-background-color: #0f172a; -fx-text-fill: #38bdf8; -fx-border-color: #0284c7; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 6 12; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 12px;" text="🔄 Cambiar producto" />
+            <Label style="-fx-text-fill: #64748b; -fx-font-size: 10px;" text="Selecciona otro producto" />
+        </VBox>
+    </HBox>
+
+    <!-- 3. CAMPOS DE EDICIÓN -->
+    <VBox spacing="10">
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #1c2541; -fx-padding: 8 12; -fx-background-radius: 8;">
+            <Label prefWidth="130" style="-fx-text-fill: #94a3b8; -fx-font-size: 13px; -fx-font-weight: bold;" text="👟  Talla:" />
+            <ComboBox fx:id="cmbTalla" maxWidth="1.7976931348623157E308" style="-fx-background-color: #0f172a; -fx-text-fill: white; -fx-mark-color: #38bdf8;" HBox.hgrow="ALWAYS" />
+        </HBox>
+
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #1c2541; -fx-padding: 8 12; -fx-background-radius: 8;">
+            <Label prefWidth="130" style="-fx-text-fill: #94a3b8; -fx-font-size: 13px; -fx-font-weight: bold;" text="📦  Cantidad:" />
+            <TextField fx:id="txtCantidad" style="-fx-background-color: #0f172a; -fx-text-fill: white;" HBox.hgrow="ALWAYS" />
+        </HBox>
+
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #1c2541; -fx-padding: 8 12; -fx-background-radius: 8;">
+            <Label prefWidth="130" style="-fx-text-fill: #94a3b8; -fx-font-size: 13px; -fx-font-weight: bold;" text="💳  Método de Pago:" />
+            <ComboBox fx:id="cmbMetodoPago" maxWidth="1.7976931348623157E308" style="-fx-background-color: #0f172a; -fx-text-fill: white; -fx-mark-color: #38bdf8;" HBox.hgrow="ALWAYS" />
+        </HBox>
+
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #1c2541; -fx-padding: 8 12; -fx-background-radius: 8;">
+            <Label prefWidth="130" style="-fx-text-fill: #94a3b8; -fx-font-size: 13px; -fx-font-weight: bold;" text="🪙  Precio Total ($):" />
+            <TextField fx:id="txtPrecio" style="-fx-background-color: #0f172a; -fx-text-fill: white;" HBox.hgrow="ALWAYS" />
+        </HBox>
+    </VBox>
+
+    <Label fx:id="lblError" style="-fx-text-fill: #ef4444; -fx-font-size: 12px;" wrapText="true" />
+
+    <!-- 4. PANEL INFORMATIVO INFERIOR -->
+    <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1c2541; -fx-padding: 10 14; -fx-background-radius: 8;">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label style="-fx-font-size: 18px;" text="🧮" />
+            <VBox>
+                <Label style="-fx-text-fill: #38bdf8; -fx-font-size: 11px; -fx-font-weight: bold;" text="Información del movimiento" />
+                <Label style="-fx-text-fill: #64748b; -fx-font-size: 10px;" text="Podrás modificar los datos y guardar los cambios." />
+            </VBox>
+        </HBox>
+        <Region HBox.hgrow="ALWAYS" />
+        <VBox alignment="CENTER_RIGHT">
+            <Label style="-fx-text-fill: #64748b; -fx-font-size: 10px;" text="🕒 Fecha / Hora del registro" />
+            <Label fx:id="lblFechaRegistro" style="-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 11px;" text="-" />
+        </VBox>
+    </HBox>
+
+    <!-- 5. BOTONES DE ACCIÓN -->
+    <HBox alignment="CENTER_RIGHT" spacing="12">
+        <Button onAction="#cerrarVentana" style="-fx-background-color: #334155; -fx-text-fill: white; -fx-padding: 8 18; -fx-cursor: hand; -fx-background-radius: 6px; -fx-font-weight: bold;" text="🔄 Cancelar" />
+        <Button onAction="#guardarCambios" style="-fx-background-color: #0284c7; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 18; -fx-cursor: hand; -fx-background-radius: 6px;" text="💾 Guardar Cambios" />
+    </HBox>
+
+</VBox>

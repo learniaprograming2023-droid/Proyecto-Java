@@ -2,3 +2,138 @@
 .table-cell { -fx-alignment: CENTER; }
 .table-cell.stock-con { -fx-background-color: #d4edda; -fx-font-weight: bold; }
 .table-cell.stock-cero { -fx-text-fill: #aaa; }
+/* --- VISTA HISTORIAL GENERAL --- */
+.main-container {
+    -fx-background-color: #0f172a;
+}
+
+.header-box {
+    -fx-background-color: #1e293b;
+    -fx-padding: 15px;
+    -fx-background-radius: 8px;
+}
+
+.title-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f8fafc;
+}
+
+.subtitle-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #94a3b8;
+}
+
+.badge-label {
+    -fx-background-color: #334155;
+    -fx-text-fill: #e2e8f0;
+    -fx-padding: 5 10 5 10;
+    -fx-background-radius: 12px;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* Filtros y Card */
+.filter-card {
+    -fx-background-color: #1e293b;
+    -fx-background-radius: 8px;
+}
+
+.filter-title {
+    -fx-font-size: 11px;
+    -fx-text-fill: #94a3b8;
+    -fx-font-weight: bold;
+}
+
+/* Toggle Buttons Métodos de Pago */
+.toggle-button {
+    -fx-background-color: #334155;
+    -fx-text-fill: #f8fafc;
+    -fx-font-size: 11px;
+    -fx-padding: 6 12 6 12;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+.toggle-button:hover {
+    -fx-background-color: #475569;
+}
+
+/* Tabla Estilo Oscuro */
+.table-view {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #334155;
+    -fx-border-radius: 6px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #0f172a;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94a3b8;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: #f8fafc;
+    -fx-border-color: transparent transparent #334155 transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #0f172a;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #334155;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #1d4ed8;
+}
+
+.table-cell {
+    -fx-text-fill: #e2e8f0;
+}
+
+/* Texto de contador y paginación */
+.pagination {
+    -fx-page-information-visible: true;
+}
+
+.pagination .page-information {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 11px;
+}
+
+#lblResumen {
+    -fx-text-fill: #cbd5e1;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+/* Scrollbar para la vista en bloques */
+.scroll-historial {
+    -fx-background-color: transparent;
+    -fx-background: #0f172a;
+}
+
+.scroll-historial .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-historial .scroll-bar:vertical {
+    -fx-background-color: #1e293b;
+}
+
+.scroll-historial .scroll-bar:vertical .thumb {
+    -fx-background-color: #475569;
+    -fx-background-radius: 4px;
+}

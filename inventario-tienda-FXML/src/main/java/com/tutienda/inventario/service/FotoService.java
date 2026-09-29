@@ -1,4 +1,4 @@
-package com.tutienda.inventario.util;
+package com.tutienda.inventario.service;
 
 import javafx.scene.image.Image;
 import java.io.File;

@@ -1,6 +1,5 @@
-package com.tutienda.inventario.dao;
+package com.tutienda.inventario.config;
 
-import com.tutienda.inventario.exception.DatabaseException;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import java.io.InputStream;
@@ -11,7 +10,6 @@ import java.util.Properties;
 public final class ConexionDB {
 
     private static final HikariDataSource DS;
-    private static volatile String ultimoError = null;
 
     static {
         HikariConfig config = new HikariConfig();
@@ -41,10 +39,10 @@ public final class ConexionDB {
             config.setPoolName("InventarioPool");
 
             DS = new HikariDataSource(config);
+            Runtime.getRuntime().addShutdownHook(new Thread(DS::close)); // Cierre automático
             System.out.println("✓ HikariCP Pool OK: " + config.getJdbcUrl());
 
         } catch (Exception e) {
-            ultimoError = e.getMessage();
             throw new ExceptionInInitializerError("✗ Error inicializando HikariPool: " + e.getMessage());
         }
     }
@@ -54,9 +52,8 @@ public final class ConexionDB {
     public static Connection getConnection() throws SQLException {
         try {
             return DS.getConnection();
-        } catch (SQLException e) {
-            ultimoError = e.getMessage();
-            throw new DatabaseException("No se pudo obtener conexión del Pool. Verifica PostgreSQL.", e);
+        } catch (Exception e) {
+            throw new ExceptionInInitializerError("✗ Error inicializando HikariPool: " + e.getMessage());
         }
     }
 
@@ -64,8 +61,7 @@ public final class ConexionDB {
         try (Connection c = DS.getConnection()) {
             return c.isValid(2);
         } catch (Exception e) {
-            ultimoError = e.getMessage();
-            return false;
+            throw new ExceptionInInitializerError("✗ Error inicializando HikariPool: " + e.getMessage());
         }
     }
 
@@ -74,8 +70,6 @@ public final class ConexionDB {
             DS.close();
         }
     }
-
-    public static String getUltimoError() { return ultimoError; }
 }
 
 

@@ -1,4 +1,6 @@
-package com.tutienda.inventario.util;
+package com.tutienda.inventario.service;
+
+import com.tutienda.inventario.config.ConfigService;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -59,10 +61,9 @@ public class BackupService {
             pb.environment().put("PGPASSWORD", cfg.getDbPassword());
             pb.redirectErrorStream(true);
 
-            // FIX QODANA: Process dentro de try-with-resources
             StringBuilder log = new StringBuilder();
-            try (Process p = pb.start();
-                 BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+            Process p = pb.start();
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
 
                 String line;
                 while((line=br.readLine())!=null) {
@@ -78,6 +79,10 @@ public class BackupService {
                     return new ResultadoBackup(true, out.getAbsolutePath(), null);
                 } else {
                     return new ResultadoBackup(false, null, "pg_dump exit="+p.exitValue()+"\n"+log);
+                }
+            } finally {
+                if (p.isAlive()) {
+                    p.destroyForcibly();
                 }
             }
 

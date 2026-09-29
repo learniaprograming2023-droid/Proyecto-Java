@@ -1,5 +1,5 @@
 
-package com.tutienda.inventario.util;
+package com.tutienda.inventario.config;
 
 import java.io.File;
 import java.io.InputStream;

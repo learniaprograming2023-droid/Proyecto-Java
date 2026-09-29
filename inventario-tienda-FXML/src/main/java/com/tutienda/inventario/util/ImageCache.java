@@ -6,23 +6,19 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ImageCache {
-    private static final Map<String, Image> CACHE = new ConcurrentHashMap<>();
     private static final ImageCache INSTANCE = new ImageCache();
-    private ImageCache(){}
-    public static ImageCache getInstance(){ return INSTANCE; }
+    private final Map<String, Image> cache = new ConcurrentHashMap<>();
 
-    public Image get(File f, double w, double h) {
-        if (f == null || !f.exists()) return null;
-        String key = f.getAbsolutePath() + "_" + f.lastModified() + "_" + w + "x" + h;
-        return CACHE.computeIfAbsent(key, k -> {
-            try {
-                return new Image(f.toURI().toString(), w, h, true, true, true);
-            } catch (Exception e) { return null; }
-        });
+    private ImageCache() {}
+
+    public static ImageCache getInstance() { return INSTANCE; }
+
+    public Image get(File f) {
+        String key = f.getAbsolutePath() + "_" + f.lastModified();
+        return cache.computeIfAbsent(key, k -> new Image(f.toURI().toString(), 90, 55, true, true, true));
     }
+
     public void invalidate(String path) {
-        if (path == null) return;
-        CACHE.keySet().removeIf(k -> k.startsWith(path));
+        cache.keySet().removeIf(k -> k.startsWith(path));
     }
-    public void clear(){ CACHE.clear(); }
 }

@@ -1,6 +1,6 @@
 package com.tutienda.inventario.model;
 
-import com.tutienda.inventario.dao.ConexionDB;
+import com.tutienda.inventario.config.ConexionDB;
 import com.tutienda.inventario.exception.DatabaseException;
 
 import java.sql.Connection;
