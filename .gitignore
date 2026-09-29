@@ -4,3 +4,8 @@ target/
 .gradle/
 .gradle/
 build/
+target/
+.idea/
+*.class
+.gradle/
+build/
